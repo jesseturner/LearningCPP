@@ -18,11 +18,6 @@ int main()
         cout << letter << " is in position " << found+1 << " in the word.\n"; // found
         else 
         cout << letter << " is not in the word\n"; // not found
-        found = guessword.find(letter+1);
-        if (found != std::string::npos)
-        cout << letter << " is also in position " << found+1 << " in the word.\n";
-        
-        cout << "you have " << 3-i << " more guesses.\n";
         }
     cout << "you are out of guesses.\n";
     return 0; 
