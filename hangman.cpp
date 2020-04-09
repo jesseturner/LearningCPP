@@ -1,10 +1,11 @@
 #include <iostream> 
 using namespace std; 
-  
+#include <regex>
+
 int main() 
 { 
     string guessword; 
-    char letter;
+    string letter;
   
     cout << "Enter your hangman word: "; 
     cin >> guessword;
@@ -17,11 +18,19 @@ int main()
         cin >> letter;
         int found;
         found = guessword.find(letter);
-        scoreboard = scoreboard.replace(found, 1, '_',  letter);
-        if (found != std::string::npos)
+
+        scoreboard = std::regex_replace(guessword, std::regex(letter), "_");
+        cout << scoreboard << endl;
+
+        /*if (found != std::string::npos)
         cout << letter << " is in position " << found+1 << " in the word.\n" << scoreboard << endl;
         else
         cout << letter << " is not in the word\n"; // not found
+        if (found != std::string::npos)
+        scoreboard = scoreboard.replace(found, found+2, '_',  letter);
+        else
+        scoreboard = scoreboard;*/
+    cout << scoreboard << endl;
         }
     cout << "you are out of guesses.\n";
     return 0; 
