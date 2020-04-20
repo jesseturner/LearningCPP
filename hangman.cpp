@@ -7,10 +7,12 @@ int main()
     string guessword; 
     string letter;
     int lives; 
+    int iswinner;
     string scoreboard; 
 
     cout << "Enter your hangman word: "; 
     cin >> guessword;
+    cout << "\n\n\n\n\n";
     cout << "The word is " << guessword.length() << " letters long.\n";
     scoreboard = string(guessword.length(), '_');
     cout << scoreboard << endl;
@@ -35,12 +37,20 @@ int main()
         else
         lives = lives-1;
 
-        cout << "You have " << lives << " lives left.\n";
+        cout << "You have " << lives << " lives left.\n\n";
         cout << scoreboard << endl;
 
-        cout << "----------------------------------------\n\n";   
+        iswinner = scoreboard.find('_');
+        if (iswinner == std::string::npos)
+        lives = 0;
+
+        cout << "\n----------------------------------------\n\n";   
         }
-    cout << "you are out of guesses.\n";
+
+    if (iswinner == std::string::npos)
+    cout << "Winner! The word is " << scoreboard << "\n\n";
+    else
+    cout << "You have lost. You are out of guesses.\n";
     
     return 0; 
 }
