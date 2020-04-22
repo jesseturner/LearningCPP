@@ -28,13 +28,18 @@ int main()
         cin >> letter;
         found = guessword.find(letter);
         
+        vector<int> positions;
+
+        int pos = guessword.find(letter, 0);
         if (found != std::string::npos)
-        cout << letter << " is in position " << found+1 << " in the word.\n";
-        else
-        cout << letter << " is not in the word\n"; // not found
-        if (found != std::string::npos)
-        scoreboard = scoreboard.replace(found, 1,  letter);
-        else
+            while(pos != std::string::npos)
+            {
+                positions.push_back(pos);
+                scoreboard = scoreboard.replace(pos, 1,  letter);
+                pos = guessword.find(letter,pos+1);
+            }
+            
+        if (found == std::string::npos)
         lives = lives-1;
 
         cout << "You have " << lives << " lives left.\n\n";
