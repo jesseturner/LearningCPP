@@ -11,19 +11,6 @@ using namespace std;
 
 int main() {
 
-/* Needs to take an input of two cards, and compare them to the deck */
-
-	string pocket_one;
-	string pocket_two;
-
-	cout << "Enter your first pocket card: \n";
-	getline(std::cin, pocket_one);
-	cout << "Enter your second pocket card: \n";
-	getline(std::cin, pocket_two);
-
-
-	cout << "Your cards are " << pocket_one << ", " << pocket_two << endl;
-
 	std::vector<std::string> deck;
 	deck.push_back("Ace of Spades"); 
 	deck.push_back("Two of Spades");
@@ -41,12 +28,12 @@ int main() {
 
 	srand (time(NULL));
 
-	// deck.erase(deck.begin() + pocket_one);
+	int dealt_1 = rand() % deck.size();
+	deck[dealt_1];
 
-	int randomIndex = rand() % deck.size();
-	deck[randomIndex];
+	deck.erase(deck.begin() + dealt_1);
 
-	cout << "First randomly drawn card: " << deck[randomIndex] << endl;
+	cout << "First randomly drawn card: " << deck[dealt_1] << endl;
 
 	return 0;
 }
