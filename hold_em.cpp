@@ -1,4 +1,4 @@
-/* Texas Hold Em game, no betting */
+/* Texas Hold Em game */
 
 #include <iostream> 
 using namespace std; 
@@ -8,6 +8,13 @@ using namespace std;
 
 #include <stdlib.h>
 #include <time.h>
+
+#include <random>
+#include <algorithm>
+
+int randomfunc(int j) { 
+    return rand() % j; 
+}
 
 int main() {
 
@@ -67,23 +74,18 @@ int main() {
 	deck.push_back("Queen of Clubs");
 	deck.push_back("King of Clubs");
 
+	srand(unsigned(time(0)));
+
+	std::random_shuffle(deck.begin(), deck.end(), randomfunc);
+
+	std::cout << "shuffled elements:";
+
+ 	for(int i=0; i < deck.size(); i++)
+     	std::cout << deck.at(i) << "\n";
+	
 //dealing the cards
 
-	srand (time(NULL));
-
-	int hero_1 = rand() % deck.size();
-	deck.erase(deck.begin() + hero_1);
-
-	int villain_1 = rand() % deck.size();
-	deck.erase(deck.begin() + villain_1);
-
-	int hero_2 = rand() % deck.size();
-	deck.erase(deck.begin() + hero_2);
-
-	int villain_2 = rand() % deck.size();
-	deck.erase(deck.begin() + villain_2);
-
-	cout << "Your pocket cards are: " << deck[hero_1] << " and " << deck[hero_2] << endl;
+	cout << "Your pocket cards are: " << deck[1] << " and " << deck[3] << endl;
 
 //first bet
 
@@ -96,18 +98,9 @@ int main() {
 
 //flop
 
-	int flop_1 = rand() % deck.size();
-	deck.erase(deck.begin() + flop_1);
+	cout << "Flop: " << deck[6] << ", " << deck[7] << ", " << deck[8] << endl;
 
-	int flop_2 = rand() % deck.size();
-	deck.erase(deck.begin() + flop_2);
-
-	int flop_3 = rand() % deck.size();
-	deck.erase(deck.begin() + flop_3);
-
-	cout << "Flop: " << deck[flop_1] << ", " << deck[flop_2] << ", " << deck[flop_3] << endl;
-
-	cout << "Pocket cards: " << deck[hero_1] << " and " << deck[hero_2] << endl;
+	cout << "Pocket cards: " << deck[1] << " and " << deck[3] << endl;
 
 
 //second bet
@@ -121,12 +114,9 @@ int main() {
 
 //turn
 
-	int turn = rand() % deck.size();
-	deck.erase(deck.begin() + turn);
-
-	cout << "Turn: " << deck[flop_1] << ", " << deck[flop_2] << ", " << deck[flop_3] << ", " << deck[turn] << endl;
+	cout << "Turn: " << deck[6] << ", " << deck[7] << ", " << deck[8] << ", " << deck[10] << endl;
 	
-	cout << "Pocket cards: " << deck[hero_1] << " and " << deck[hero_2] << endl;
+	cout << "Pocket cards: " << deck[1] << " and " << deck[3] << endl;
 
 //third bet
 
@@ -139,13 +129,10 @@ int main() {
 
 //river
 
-	int river = rand() % deck.size();
-	deck.erase(deck.begin() + river);
-
-	cout << "River: " << deck[flop_1] << ", " << deck[flop_2] << ", " << 
-	deck[flop_3] << ", " << deck[turn] << ", " << deck[river] << endl;
+	cout << "River: " << deck[6] << ", " << deck[7] << ", " << 
+	deck[8] << ", " << deck[10] << ", " << deck[12] << endl;
 	
-	cout << "Pocket cards: " << deck[hero_1] << " and " << deck[hero_2] << endl;
+	cout << "Pocket cards: " << deck[1] << " and " << deck[3] << endl;
 
 //fourth bet
 
@@ -161,13 +148,13 @@ int main() {
 
 	cout << "------------ Show cards ------------" << endl;
 
-	cout << "Middle cards: " << deck[flop_1] << ", " << deck[flop_2] << ", " << 
-	deck[flop_3] << ", " << deck[turn] << ", " << deck[river] << endl;
+	cout << "Middle cards: " << deck[6] << ", " << deck[7] << ", " << 
+	deck[8] << ", " << deck[10] << ", " << deck[12] << endl;
 
-	cout << "Your pocket cards: " << deck[hero_1] << " and " << deck[hero_2] << endl;
+	cout << "Your pocket cards: " << deck[1] << " and " << deck[3] << endl;
 
-	cout << "Opponent's cards: " << deck[villain_1] << " and " << deck[villain_2] << endl;
+	cout << "Opponent's cards: " << deck[2] << " and " << deck[4] << endl;
+
 
 	return 0;
-
 }
