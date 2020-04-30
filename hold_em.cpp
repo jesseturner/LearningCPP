@@ -77,83 +77,125 @@ int main() {
 	srand(unsigned(time(0)));
 
 	std::random_shuffle(deck.begin(), deck.end(), randomfunc);
-
-	std::cout << "shuffled elements:";
-
- 	for(int i=0; i < deck.size(); i++)
-     	std::cout << deck.at(i) << "\n";
 	
 //dealing the cards
 
-	cout << "Your pocket cards are: " << deck[1] << " and " << deck[3] << endl;
+	cout << "------------ First two cards down ------------ \n\n";
+
+	cout << "Your pocket cards are: " << deck[1] << " and " << deck[3] << "\n\n";
+
+	cout << "Press ENTER to continue..";
+	cin.ignore();
+	cin.get();	
 
 //first bet
+
+	cout << "------------ First bet ------------ \n\n";
 
 	cout << "Place bet (Opponent will call): " << endl;
 
 	int bet_preflop;
 	cin >> bet_preflop;
 
-	cout << "Pot size: " << bet_preflop*2 << "\n\n";
+	cout << "\n\nOpponent Called \n >>> Pot size: " << bet_preflop*2 << "\n\n";
+
+	cout << "Press ENTER to continue..";
+	cin.ignore();
+	cin.get();	
 
 //flop
 
-	cout << "Flop: " << deck[6] << ", " << deck[7] << ", " << deck[8] << endl;
+	cout << "------------ Flop ------------ \n\n";
 
-	cout << "Pocket cards: " << deck[1] << " and " << deck[3] << endl;
+	cout << "Flop: " << deck[6] << ", " << deck[7] << ", " << deck[8] << "\n\n";
 
+	cout << "Pocket cards: " << deck[1] << " and " << deck[3] << "\n\n";
+
+	cout << "Press ENTER to continue..";
+	cin.ignore();
+	cin.get();	
 
 //second bet
+
+	cout << "------------ Second bet ------------ \n\n";
 
 	cout << "Place bet (Opponent will call): " << endl;
 
 	int bet_flop;
 	cin >> bet_flop;
 
-	cout << "Pot size: " << (bet_preflop*2) + (bet_flop*2) << "\n\n";
+	cout << "\n\nOpponent Called \n >>> Pot size: " << (bet_preflop*2) + (bet_flop*2) << "\n\n";
+
+	cout << "Press ENTER to continue..";
+	cin.ignore();
+	cin.get();	
 
 //turn
 
-	cout << "Turn: " << deck[6] << ", " << deck[7] << ", " << deck[8] << ", " << deck[10] << endl;
+	cout << "------------ Turn ------------ \n\n";
+
+	cout << "Turn: " << deck[6] << ", " << deck[7] << ", " << deck[8] << ", " << deck[10] << "\n\n";
 	
-	cout << "Pocket cards: " << deck[1] << " and " << deck[3] << endl;
+	cout << "Pocket cards: " << deck[1] << " and " << deck[3] << "\n\n";
+
+	cout << "Press ENTER to continue..";
+	cin.ignore();
+	cin.get();	
 
 //third bet
+
+	cout << "------------ Third bet ------------ \n\n";
 
 	cout << "Place bet (Opponent will call): " << endl;
 
 	int bet_turn;
 	cin >> bet_turn;
 
-	cout << "Pot size: " << (bet_preflop*2) + (bet_flop*2) + (bet_turn*2) << "\n\n";
+	cout << "\n\nOpponent Called \n >>> Pot size: " << (bet_preflop*2) + (bet_flop*2) + (bet_turn*2) << "\n\n";
+
+	cout << "Press ENTER to continue..";
+	cin.ignore();
+	cin.get();	
 
 //river
 
+	cout << "------------ River ------------ \n\n";
+
 	cout << "River: " << deck[6] << ", " << deck[7] << ", " << 
-	deck[8] << ", " << deck[10] << ", " << deck[12] << endl;
+	deck[8] << ", " << deck[10] << ", " << deck[12] << "\n\n";
 	
-	cout << "Pocket cards: " << deck[1] << " and " << deck[3] << endl;
+	cout << "Pocket cards: " << deck[1] << " and " << deck[3] << "\n\n";
+	
+	cout << "Press ENTER to continue..";
+	cin.ignore();
+	cin.get();	
 
 //fourth bet
+
+	cout << "------------ Fourth bet ------------ \n\n";
 
 	cout << "Place bet (Opponent will call): " << endl;
 
 	int bet_river;
 	cin >> bet_river;
 
-	cout << "Pot size: " << (bet_preflop*2) + (bet_flop*2) + (bet_turn*2) + (bet_river*2) << "\n\n";
+	cout << "\n\nOpponent Called \n >>> Pot size: " << (bet_preflop*2) + (bet_flop*2) + 
+	(bet_turn*2) + (bet_river*2) << "\n\n";
 
+	cout << "Press ENTER to continue..";
+	cin.ignore();
+	cin.get();
 
 //show cards
 
-	cout << "------------ Show cards ------------" << endl;
+	cout << "------------ Show cards ------------" << "\n\n";
 
 	cout << "Middle cards: " << deck[6] << ", " << deck[7] << ", " << 
-	deck[8] << ", " << deck[10] << ", " << deck[12] << endl;
+	deck[8] << ", " << deck[10] << ", " << deck[12] << "\n\n";
 
-	cout << "Your pocket cards: " << deck[1] << " and " << deck[3] << endl;
+	cout << "Your pocket cards: " << deck[1] << " and " << deck[3] << "\n\n";
 
-	cout << "Opponent's cards: " << deck[2] << " and " << deck[4] << endl;
+	cout << "Opponent's cards: " << deck[2] << " and " << deck[4] << "\n\n";
 
 
 	return 0;
