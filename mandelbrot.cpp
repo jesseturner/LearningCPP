@@ -7,6 +7,8 @@ g++ -std=c++11 -o mandelbrot mandelbrot.cpp -I~/Desktop/SFML\ Tut/\ExternalLibra
 -L~/Desktop/SFML\ Tut/\ExternalLibraries/SFML/lib/ -lsfml-graphics -lsfml-system -lsfml-window 
 */
 
+#include <iostream> 
+using namespace std; 
 #include <SFML/Graphics.hpp>
 
 int main()
@@ -21,26 +23,32 @@ int main()
 	
 	int pix_x = 0;
 	int pix_y = 0;
+	int n = 0;
 
 	for (pix_x = 0; pix_x < max_x; pix_x++) {
 		for (pix_y = 0; pix_y < max_y; pix_y++) {
-			float a = pix_x; //I'm guessing the problem is here. CodingTrain uses a js map() function?
+			
+			//normalizing between -2 and 2
+			/*float a = ((pix_x * 4) / (max_x)) - 2;
+			float b = ((pix_y * 4) / (max_y)) - 2;*/
+
+			float a = pix_x; //currently this gives a result, but the above should be used
 			float b = pix_y;
 
 			float ca = a;
 			float cb = b;
 
-			for (int n = 0; n == 100; n++) {
+			for (n = 0; n < 100; n++) {
 				float aa = a * a - b * b;
 				float bb = 2 * a * b;
 				float a = aa + ca;
 				float b = bb + cb;
-				
+
 				if (a + b > 16) {
 					// Change pixel color
 					sf::Color color = image.getPixel(pix_x, pix_y);
 					color.r = 255;
-					image.setPixel(pix_x, pix_y, color);
+					image.setPixel(pix_x, pix_y, color);				
 				}
 
 			}
