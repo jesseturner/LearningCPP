@@ -10,6 +10,7 @@ g++ -std=c++11 -o mandelbrot mandelbrot.cpp -I~/Desktop/SFML\ Tut/\ExternalLibra
 #include <iostream> 
 using namespace std; 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 int main()
 {
@@ -29,11 +30,11 @@ int main()
 		for (pix_y = 0; pix_y < max_y; pix_y++) {
 			
 			//normalizing between -2 and 2
-			/*float a = ((pix_x * 4) / (max_x)) - 2;
-			float b = ((pix_y * 4) / (max_y)) - 2;*/
+			float a = ((pix_x * 4) / (max_x)) - 2;
+			float b = ((pix_y * 4) / (max_y)) - 2;
 
-			float a = pix_x; //currently this gives a result, but the above should be used
-			float b = pix_y;
+			/*float a = pix_x; //currently this gives a result, but the above should be used
+			float b = pix_y;*/
 
 			float ca = a;
 			float cb = b;
@@ -41,15 +42,26 @@ int main()
 			for (n = 0; n < 100; n++) {
 				float aa = a * a - b * b;
 				float bb = 2 * a * b;
-				float a = aa + ca;
-				float b = bb + cb;
+				//cout << "a is now: " << a << "\n";
+				//cout << "b is now: " << b << "\n";
 
-				if (a + b > 16) {
+				a = aa + ca;
+				b = bb + cb;
+
+
+				if (a + b > 16){
 					// Change pixel color
 					sf::Color color = image.getPixel(pix_x, pix_y);
 					color.r = 255;
-					image.setPixel(pix_x, pix_y, color);				
+					image.setPixel(pix_x, pix_y, color);
 				}
+
+				/*if (isnan(a + b)){ // many nan's. Because of x/0? 
+					// Change pixel color
+					sf::Color color = image.getPixel(pix_x, pix_y);
+					color.b = 255;
+					image.setPixel(pix_x, pix_y, color);			
+				}*/
 
 			}
 		}
