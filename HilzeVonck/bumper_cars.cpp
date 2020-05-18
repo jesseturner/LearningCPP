@@ -7,14 +7,11 @@ g++ -std=c++11 -o bumper_cars bumper_cars.cpp -I~/Desktop/SFML\ Tut/\ExternalLib
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-
-//#include "Animation.h"
-//#include "Collider.h"
+#include "Collider.hpp"
 
 
 	/*sf::Vector2f GetPosition() { return body.getPosition(); }
 	Collider GetCollider() { return Collider(body); }*/
-
 
 
 int main()
@@ -33,7 +30,8 @@ int main()
 				window.close();
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-			player1.move(-0.1f, 0.0f);
+			{ player1.move(-0.1f, 0.0f);
+			void Collide(); }
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 			player1.move(0.1f, 0.0f);		
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
@@ -49,6 +47,24 @@ int main()
 			player2.move(0.0f, -0.1f);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 			player2.move(0.0f, 0.1f);
+
+		//need to run this after each movement
+
+		void Collide()
+		{
+			sf::Vector2f position1 = player1.getPosition();
+			sf::Vector2f position2 = player2.getPosition();
+
+			int check_col = IsCollision(position1, position2);
+
+			if (check_col == 1)
+				player1.move(-0.3f, 0.0f), player2.move(0.3f, 0.0f), 
+				player1.setFillColor(sf::Color::Green), player2.setFillColor(sf::Color::Green);
+
+			if (check_col == 0)
+				player1.setFillColor(sf::Color::Red), player2.setFillColor(sf::Color::Blue);
+		}
+		
 
         window.clear();
         window.draw(player1);
