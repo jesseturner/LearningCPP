@@ -14,6 +14,7 @@ g++ -std=c++11 -o bumper_cars bumper_cars.cpp -I~/Desktop/SFML\ Tut/\ExternalLib
 
 int main()
 {
+//Making the window
 	sf::RenderWindow window(sf::VideoMode(1500, 1500), "Bumper Cars");
 	sf::RectangleShape player1(sf::Vector2f(100.0f, 100.0f)); //f is float (also i for int or u for undef)
 	sf::RectangleShape player2(sf::Vector2f(100.0f, 100.0f));
@@ -28,35 +29,31 @@ int main()
 			if (evnt.type == evnt.Closed)
 				window.close();
 
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-			{ 
-				player1.move(-0.5f, 0.0f);
-			}
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-			{
-				player1.move(0.5f, 0.0f);	
-			}
+//Check for walls
+		sf::Vector2f Position1 = player1.getPosition();
+		sf::Vector2f Position2 = player2.getPosition();
 
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-			{
-				player1.move(0.0f, -0.5f);
-			}
-
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-			{
-				player1.move(0.0f, 0.5f);
-			}
+//Driving the cars
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && (Position1.x != 0))
+			player1.move(-0.5f, 0.0f);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && (Position1.x != 1400))
+			player1.move(0.5f, 0.0f);	
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && (Position1.y != 0))
+			player1.move(0.0f, -0.5f);
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && (Position1.y != 1400))
+			player1.move(0.0f, 0.5f);
 
 
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && (Position2.x != 0))
 			player2.move(-0.5f, 0.0f);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && (Position2.x != 1400))
 			player2.move(0.5f, 0.0f);		
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && (Position2.y != 0))
 			player2.move(0.0f, -0.5f);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && (Position2.y != 1400))
 			player2.move(0.0f, 0.5f);
 
+//Bumping the cars
 		if(player1.getGlobalBounds().intersects(player2.getGlobalBounds()))
 			{
 				player1.setFillColor(sf::Color::Green);
@@ -70,7 +67,6 @@ int main()
 				player2.setFillColor(sf::Color::Blue);
 			}
 
-		
 
         window.clear();
         window.draw(player1);
