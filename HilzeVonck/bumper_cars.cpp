@@ -9,6 +9,9 @@ g++ -std=c++11 -o bumper_cars bumper_cars.cpp -I~/Desktop/SFML\ Tut/\ExternalLib
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <ctime>
+#include <cmath>
+#include <chrono>
 //#include "Collider.hpp"
 
 
@@ -22,6 +25,11 @@ int main()
 	player2.setFillColor(sf::Color::Blue);
 	player2.setPosition(1400, 1400);
 
+	const float Speed = 400.f ;
+	sf::Clock clock;
+	bool isColliding1 = false;
+	bool isColliding2 = false;
+
 	while (window.isOpen())
 	{
 		sf::Event evnt;
@@ -29,43 +37,59 @@ int main()
 			if (evnt.type == evnt.Closed)
 				window.close();
 
-//Check for walls
-		sf::Vector2f Position1 = player1.getPosition();
-		sf::Vector2f Position2 = player2.getPosition();
 
 //Driving the cars
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && (Position1.x != 0))
-			player1.move(-0.5f, 0.0f);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && (Position1.x != 1400))
-			player1.move(0.5f, 0.0f);	
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && (Position1.y != 0))
-			player1.move(0.0f, -0.5f);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && (Position1.y != 1400))
-			player1.move(0.0f, 0.5f);
+		float deltaTime = clock.restart().asSeconds();
+		if(!isColliding1)
+		{
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && (player1.getPosition().x > 0.f))
+				player1.move((- Speed * deltaTime), 0.0f);
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && (player1.getPosition().x < 1400.f))
+				player1.move((Speed * deltaTime), 0.0f);	
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && (player1.getPosition().y > 0.f))
+				player1.move(0.0f, (- Speed * deltaTime));
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && (player1.getPosition().y < 1400.f))
+				player1.move(0.0f, (Speed * deltaTime));
+		}
 
+		if(!isColliding2)
+		{
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && (player2.getPosition().x > 0.f))
+				player2.move((- Speed * deltaTime), 0.0f);
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && (player2.getPosition().x < 1400.f))
+				player2.move((Speed * deltaTime), 0.0f);		
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && (player2.getPosition().y > 0.f))
+				player2.move(0.0f, (- Speed * deltaTime));
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && (player2.getPosition().y < 1400.f))
+				player2.move(0.0f,(Speed * deltaTime));
+		}
 
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && (Position2.x != 0))
-			player2.move(-0.5f, 0.0f);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && (Position2.x != 1400))
-			player2.move(0.5f, 0.0f);		
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && (Position2.y != 0))
-			player2.move(0.0f, -0.5f);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && (Position2.y != 1400))
-			player2.move(0.0f, 0.5f);
+//Bumping the walls
+		/*if((player1.getPosition().x > 0.f) || (player1.getPosition().x < 1400.f) || (player1.getPosition().y > 0.f) || (player1.getPosition().y < 1400.f))
+			isColliding1 = true;
 
+		if((player2.getPosition().x > 0.f) || (player2.getPosition().x < 1400.f) || (player2.getPosition().y > 0.f) || (player2.getPosition().y < 1400.f))
+			isColliding2 = true;
+*/
 //Bumping the cars
 		if(player1.getGlobalBounds().intersects(player2.getGlobalBounds()))
 			{
-				player1.setFillColor(sf::Color::Green);
-				player2.setFillColor(sf::Color::Green);
-				player1.move(-2.0f, 2.0f);
-				player2.move(2.0f, -2.0f);	
+				isColliding1 = true;
+				isColliding2 = true;
 			}
-		else 
-			{
-				player1.setFillColor(sf::Color::Red);
-				player2.setFillColor(sf::Color::Blue);
-			}
+
+//Collision
+		if(isColliding1)
+		{
+			player1.move(-2.0f, 2.0f);
+			player1.setFillColor(sf::Color::Green);
+		}
+
+		if(isColliding2)
+		{
+			player2.move(2.0f, -2.0f);
+			player2.setFillColor(sf::Color::Green);
+		}
 
 
         window.clear();
