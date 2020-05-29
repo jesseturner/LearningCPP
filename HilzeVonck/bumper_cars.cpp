@@ -11,7 +11,6 @@ g++ -std=c++11 -o bumper_cars bumper_cars.cpp -I~/Desktop/SFML\ Tut/\ExternalLib
 #include <SFML/Graphics.hpp>
 #include <ctime>
 #include <cmath>
-#include <chrono>
 //#include "Collider.hpp"
 
 
@@ -21,8 +20,6 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1500, 1500), "Bumper Cars");
 	sf::RectangleShape player1(sf::Vector2f(100.0f, 100.0f)); //f is float (also i for int or u for undef)
 	sf::RectangleShape player2(sf::Vector2f(100.0f, 100.0f));
-	player1.setFillColor(sf::Color::Red);
-	player2.setFillColor(sf::Color::Blue);
 	player2.setPosition(1400, 1400);
 
 	const float Speed = 400.f ;
@@ -42,6 +39,8 @@ int main()
 		float deltaTime = clock.restart().asSeconds();
 		if(!isColliding1)
 		{
+			player1.setFillColor(sf::Color::Red);
+
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && (player1.getPosition().x > 0.f))
 				player1.move((- Speed * deltaTime), 0.0f);
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) && (player1.getPosition().x < 1400.f))
@@ -54,6 +53,8 @@ int main()
 
 		if(!isColliding2)
 		{
+			player2.setFillColor(sf::Color::Blue);
+
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) && (player2.getPosition().x > 0.f))
 				player2.move((- Speed * deltaTime), 0.0f);
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) && (player2.getPosition().x < 1400.f))
@@ -81,14 +82,27 @@ int main()
 //Collision
 		if(isColliding1)
 		{
-			player1.move(-2.0f, 2.0f);
-			player1.setFillColor(sf::Color::Green);
+			float crashTime = clock.restart().asSeconds();
+
+			for (int i = 0; i < 100; i++)
+			{
+  				player1.move(-(Speed * crashTime), (Speed * crashTime));
+				player1.setFillColor(sf::Color::Green);
+			}
+			isColliding1 = false;
 		}
 
 		if(isColliding2)
 		{
-			player2.move(2.0f, -2.0f);
-			player2.setFillColor(sf::Color::Green);
+			float crashTime = clock.restart().asSeconds();
+
+			for (int i = 0; i < 100; i++)
+			{
+				player2.move((Speed * crashTime), -(Speed * crashTime));
+				player2.setFillColor(sf::Color::Green);
+			}
+			isColliding2 = false;
+			
 		}
 
 
