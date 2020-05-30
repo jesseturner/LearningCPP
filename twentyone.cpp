@@ -28,7 +28,7 @@ int main()
     sf::Font font;
 	font.loadFromFile("sansation.ttf");
 
-	// Message settings
+	// Text settings
 	sf::Text gameMessage;
 	gameMessage.setFont(font);
     gameMessage.setCharacterSize(40);
@@ -60,8 +60,7 @@ int main()
     player4.setFillColor(sf::Color::White);
 
     bool isPlaying = false;
-
-    std::string count = "1";
+	int count;
 
     while (window.isOpen())
     {
@@ -73,20 +72,29 @@ int main()
 		if(!isPlaying)
 		{
     		gameMessage.setString("Twenty-One\nPress space to start");
-			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))  //This isnt the way to do this I believe
+			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) 
 				{
 					isPlaying = true;
 					window.clear();
 				}
 		}
-		if(isPlaying)
+		if(isPlaying) // Play the round
 		{
-			gameMessage.setString("Playing");
-			player1.setString(count);
-			window.clear();
+			gameMessage.setString("Playing"); // Seems to want this Text changed
+			for (count = 1; count < 10; count++)
+			{
+				player1.setString(std::to_string(count));
+				player2.setString(std::to_string(count));
+				player3.setString(std::to_string(count));
+				player4.setString(std::to_string(count));
+			}
 		}
 
+		window.clear();
 		window.draw(player1);
+		window.draw(player2);
+		window.draw(player3);
+		window.draw(player4);
 		window.draw(gameMessage);
     	window.display();
     }
