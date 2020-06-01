@@ -11,16 +11,16 @@ g++ -std=c++11 -o twentyone twentyone.cpp
 
 int main()
 {
-	int round;
-	int  count;
+	int round[5] = {1, 2, 3, 4, 5};
+	int count[21] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21};
 	int change_number;
 	int new_number;
 
-	for (round = 1; round < 5; round++)
+	for (int i = 1; i < 6; i++)
 	{
-		for (count = 1; count < 22; count++)
+		for (int a = 0; a < 21; a++)
 		{
-			std::cout << count << "\n";
+				std::cout << count[a] << "\n";
 		}
 
 		std::cout << "\n" << "Which number to alter: ";
@@ -31,7 +31,8 @@ int main()
 
 		std::cin >> new_number;
 
-		std::cout << change_number << " is now " << new_number << "\n\n";
+		count[change_number-1] = new_number;
+		std::cout << change_number << " is now " << count[change_number-1] << "\n\n";
 
 	}
 
