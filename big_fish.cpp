@@ -9,7 +9,7 @@ g++ -std=c++11 -o big_fish big_fish.cpp -I~/Desktop/SFML\ Tut/\ExternalLibraries
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <stdlib.h> 
+#include <stdlib.h> //for rand
 
 int main()
 {
@@ -44,6 +44,7 @@ int main()
 		float deltaTime = clock.restart().asSeconds();
 
 		x_wall = (1500.f - (fish.getSize().x * x_scale));
+		y_wall = (1500.f - (fish.getSize().y * y_scale));
 
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) && (fish.getPosition().x > 0.f))
 			fish.move((- Speed * deltaTime), 0.0f);
@@ -51,7 +52,7 @@ int main()
 			fish.move((Speed * deltaTime), 0.0f);	
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) && (fish.getPosition().y > 0.f))
 			fish.move(0.0f, (- Speed * deltaTime));
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && (fish.getPosition().y < 1400.f))
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) && (fish.getPosition().y < y_wall))
 			fish.move(0.0f, (Speed * deltaTime));
 
 //Eating the food
