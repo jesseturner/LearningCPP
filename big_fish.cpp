@@ -14,7 +14,7 @@ g++ -std=c++11 -o big_fish big_fish.cpp -I~/Desktop/SFML\ Tut/\ExternalLibraries
 int main()
 {
 //Making the window
-	sf::RenderWindow window(sf::VideoMode(1500, 1500), "Bumper Cars");
+	sf::RenderWindow window(sf::VideoMode(1500, 1500), "Big Fish");
 	float x_wall = 1500, y_wall = 1500;
 
 //Making the fish
