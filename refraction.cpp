@@ -42,18 +42,16 @@ int main()
 
 	float n_one = 1;
 	float n_two;
-	float theta_one = 30; //in degrees
+	float theta_one; //in degrees
 	float theta_two;
 
 
 	std::cout << "Enter refraction index: " << std::endl;
 	std::cin >> n_two;
 
-	float height;
-	std::cout << "Enter ray height (50-750): " << std::endl;
-	std::cin >> height;
+	float enter_height = 600;
 
-	ray_enter.setPosition(0, height);
+	/*ray_enter.setPosition(0, height);
 
 	theta_one = deg_to_rad(theta_one);
 	theta_two = asin( (n_one/n_two) * sin(theta_one) ); //sin needs rad
@@ -67,7 +65,7 @@ int main()
 	float length = ((height / 400) * 700); // 400 is midpoint, 700 is diameter
 	ray_return.setPosition(500, length); // x is dist across circle points
 	//ray_return.setRotation(-theta_two);
-
+*/
 
 //running while window is open
 	while (window.isOpen())
@@ -77,13 +75,29 @@ int main()
 			if (evnt.type == evnt.Closed)
 				window.close();
 
-		
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+			enter_height--;
 
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+			enter_height++;
+
+		ray_enter.setPosition(0, enter_height);
+
+		theta_one = asin( (700 - enter_height) / ( 350 ) );
+
+		//theta_one = deg_to_rad(theta_one);
+		theta_two = asin( (n_one/n_two) * sin(theta_one) ); //sin needs rad
+		theta_two = rad_to_deg(theta_two);
+
+		std::cout << theta_two << std::endl;
+
+		ray_cross.setPosition(430, enter_height); //430 is filler for chord length
+		ray_cross.setRotation(theta_two);
 
 	    window.clear();
         window.draw(ray_enter);
         window.draw(ray_cross);
-        window.draw(ray_return);
+        //window.draw(ray_return);
         window.draw(drop);
         window.display();
     }
