@@ -44,6 +44,7 @@ int main()
 	float n_two;
 	float theta_one; //in degrees
 	float theta_two;
+	float theta_x;
 
 
 	std::cout << "Enter refraction index: " << std::endl;
@@ -51,21 +52,6 @@ int main()
 
 	float enter_height = 600;
 
-	/*ray_enter.setPosition(0, height);
-
-	theta_one = deg_to_rad(theta_one);
-	theta_two = asin( (n_one/n_two) * sin(theta_one) ); //sin needs rad
-	theta_two = rad_to_deg(theta_two);
-
-	std::cout << theta_two << std::endl;
-
-	ray_cross.setPosition(430, height);
-	ray_cross.setRotation(theta_two); //rotation needs deg
-
-	float length = ((height / 400) * 700); // 400 is midpoint, 700 is diameter
-	ray_return.setPosition(500, length); // x is dist across circle points
-	//ray_return.setRotation(-theta_two);
-*/
 
 //running while window is open
 	while (window.isOpen())
@@ -75,24 +61,36 @@ int main()
 			if (evnt.type == evnt.Closed)
 				window.close();
 
+
+		//moving the entrance height
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
 			enter_height--;
-
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 			enter_height++;
 
 		ray_enter.setPosition(0, enter_height);
 
+
+		//angle from the center of the circle
 		theta_one = asin( (700 - enter_height) / ( 350 ) );
 
-		//theta_one = deg_to_rad(theta_one);
+		//distance before hitting the circle
+		theta_x = asin( ( enter_height - 750 ) / ( 350 ) );
+		float x_dist = - ( cos( theta_x ) * 350 );
+		float dist = ( x_dist + 750 );
+		ray_enter.setSize(sf::Vector2f(dist, 10.0f));
+
+		//refraction after entering
 		theta_two = asin( (n_one/n_two) * sin(theta_one) ); //sin needs rad
 		theta_two = rad_to_deg(theta_two);
 
 		std::cout << theta_two << std::endl;
 
-		ray_cross.setPosition(430, enter_height); //430 is filler for chord length
+		//ray crossing the drop, position and angle
+		ray_cross.setPosition(dist, enter_height); //430 is filler for chord length
 		ray_cross.setRotation(theta_two);
+
+
 
 	    window.clear();
         window.draw(ray_enter);
