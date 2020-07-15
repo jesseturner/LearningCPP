@@ -75,21 +75,23 @@ int main()
 		theta_one = asin( (700 - enter_height) / ( 350 ) );
 
 		//distance before hitting the circle
-		theta_x = asin( ( enter_height - 750 ) / ( 350 ) );
-		float x_dist = - ( cos( theta_x ) * 350 );
-		float dist = ( x_dist + 750 );
-		ray_enter.setSize(sf::Vector2f(dist, 10.0f));
+		theta_x = asin( ( enter_height - 750 ) / ( 350 ) ); //angle between entrance point and x-axis through circle center
+		float x_dist = - ( cos( theta_x ) * 350 ); 
+		float dist_to = ( x_dist + 750 );
+		ray_enter.setSize(sf::Vector2f(dist_to, 10.0f));
 
 		//refraction after entering
 		theta_two = asin( (n_one/n_two) * sin(theta_one) ); //sin needs rad
 		theta_two = rad_to_deg(theta_two);
 
-		std::cout << theta_two << std::endl;
 
-		//ray crossing the drop, position and angle
-		ray_cross.setPosition(dist, enter_height); //430 is filler for chord length
+		//ray crossing the drop, position, size, and angle
+		ray_cross.setPosition(dist_to, enter_height); 
 		ray_cross.setRotation(theta_two);
+		float dist_cross = 2 * ( 350 * sin( ( 3.14 - theta_x ) / 2 ) ); //calculating the chord distance
+		ray_cross.setSize(sf::Vector2f(dist_cross, 10.0f));
 
+		std::cout << theta_x << std::endl;
 
 
 	    window.clear();
