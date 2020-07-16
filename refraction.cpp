@@ -43,8 +43,8 @@ int main()
 	float n_one = 1;
 	float n_two;
 	float theta_one; //in degrees
-	float theta_two;
-	float theta_x;
+	float theta_two_rad;
+	float theta_two_deg;
 
 
 	std::cout << "Enter refraction index: " << std::endl;
@@ -72,32 +72,37 @@ int main()
 
 
 		//angle from the center of the circle
-		theta_one = asin( (700 - enter_height) / ( 350 ) );
+		theta_one = asin( (750 - enter_height) / ( 350 ) );
 
 		//distance before hitting the circle
-		theta_x = asin( ( enter_height - 750 ) / ( 350 ) ); //angle between entrance point and x-axis through circle center
-		float x_dist = - ( cos( theta_x ) * 350 ); 
-		float dist_to = ( x_dist + 750 );
+		float dist_to = ( ( -cos( theta_one ) * 350 ) + 750); 
 		ray_enter.setSize(sf::Vector2f(dist_to, 10.0f));
 
 		//refraction after entering
-		theta_two = asin( (n_one/n_two) * sin(theta_one) ); //sin needs rad
-		theta_two = rad_to_deg(theta_two);
+		theta_two_rad = asin( (n_one/n_two) * sin(theta_one) ); //sin needs rad
+		theta_two_deg = rad_to_deg(theta_two_rad);
 
 
 		//ray crossing the drop, position, size, and angle
 		ray_cross.setPosition(dist_to, enter_height); 
-		ray_cross.setRotation(theta_two);
-		float dist_cross = 2 * ( 350 * sin( ( 3.14 - theta_x ) / 2 ) ); //calculating the chord distance
+		ray_cross.setRotation(theta_two_deg);
+		float dist_cross = 2 * ( 350 * sin( ( 3.1416 - theta_one ) / 2 ) ); //calculating the chord distance
 		ray_cross.setSize(sf::Vector2f(dist_cross, 10.0f));
 
-		std::cout << theta_x << std::endl;
+		std::cout << theta_two_deg << std::endl;
+
+		//ray returning across the drop
+		float cross_x = (cos( theta_two_rad ) * dist_cross);
+		float cross_y = -(sin( theta_two_rad ) * dist_cross);
+		ray_return.setPosition((cross_x + dist_to), -(cross_y - 750));
+		ray_return.setRotation(180 - theta_two_deg);
+		ray_return.setSize(sf::Vector2f(dist_cross, 10.0f));
 
 
 	    window.clear();
         window.draw(ray_enter);
         window.draw(ray_cross);
-        //window.draw(ray_return);
+        window.draw(ray_return);
         window.draw(drop);
         window.display();
     }
