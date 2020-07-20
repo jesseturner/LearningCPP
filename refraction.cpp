@@ -42,7 +42,7 @@ int main()
 
 	float n_one = 1;
 	float n_two;
-	float theta_one; //in degrees
+	float theta_one_rad;
 	float theta_two_rad;
 	float theta_two_deg;
 
@@ -72,21 +72,22 @@ int main()
 
 
 		//angle from the center of the circle
-		theta_one = asin( (750 - enter_height) / ( 350 ) );
+		theta_one_rad = asin( (750 - enter_height) / ( 350 ) );
 
 		//distance before hitting the circle
-		float dist_to = ( ( -cos( theta_one ) * 350 ) + 750); 
+		float dist_to = ( ( -cos( theta_one_rad ) * 350 ) + 750); 
+		float y_dist_to = ( ( sin( theta_one_rad ) * 350 ) - 750); //for reflection
 		ray_enter.setSize(sf::Vector2f(dist_to, 10.0f));
 
 		//refraction after entering
-		theta_two_rad = asin( (n_one/n_two) * sin(theta_one) ); //sin needs rad
+		theta_two_rad = asin( (n_one/n_two) * sin(theta_one_rad) ); //sin needs rad
 		theta_two_deg = rad_to_deg(theta_two_rad);
 
 
 		//ray crossing the drop, position, size, and angle
 		ray_cross.setPosition(dist_to, enter_height); 
 		ray_cross.setRotation(theta_two_deg);
-		float dist_cross = 2 * ( 350 * sin( ( 3.1416 - theta_one ) / 2 ) ); //calculating the chord distance
+		float dist_cross = 2 * ( 350 * sin( ( 3.1416 - theta_one_rad ) / 2 ) ); //calculating the chord distance
 		ray_cross.setSize(sf::Vector2f(dist_cross, 10.0f));
 
 		std::cout << theta_two_deg << std::endl;
@@ -94,9 +95,12 @@ int main()
 		//ray returning across the drop
 		float cross_x = (cos( theta_two_rad ) * dist_cross);
 		float cross_y = -(sin( theta_two_rad ) * dist_cross);
-		ray_return.setPosition((cross_x + dist_to), -(cross_y - 750));
+		ray_return.setPosition((cross_x + dist_to), -(cross_y + y_dist_to));
 		ray_return.setRotation(180 - theta_two_deg);
-		ray_return.setSize(sf::Vector2f(dist_cross, 10.0f));
+
+		float theta_three_rad = 3.1416 - ( 2 * (theta_two_rad - theta_one_rad) ); //not correct for theta_three
+		float dist_return = 2 * ( 350 * sin( ( theta_three_rad ) / 2 ) );
+		ray_return.setSize(sf::Vector2f( dist_return, 10.0f));
 
 
 	    window.clear();
