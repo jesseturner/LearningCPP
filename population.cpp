@@ -21,43 +21,40 @@ unsigned random(unsigned max) { //unsigned means non-negative, whole numbers. Ma
 	return rand() % max;
 }
 
+class Ball
+{
+		sf::CircleShape* ball; //initializing the pointer (not dereference).  
+
+	public:
+	 	Ball(int x, int y) {
+			ball = new sf::CircleShape(100.0, 100.0); //returns a pointer
+			ball->setPosition(x, y); //equivalent to (*ball).setPosition
+		  	ball->setFillColor(sf::Color::Magenta);
+		}
+
+		void move_around(float x_speed, float y_speed, float x_angle, float y_angle) {
+			ball->move(sf::Vector2f(x_angle * x_speed, y_angle * y_speed)); 
+		}
+
+		sf::CircleShape ballObj() {
+			return *ball; //dereference, return the value pointed to by ball
+		}
+};
+
 
 int main()
 {
 //Making the window
 	sf::RenderWindow window(sf::VideoMode(1500, 1500), "Population");
 	
-	/*const int numOfPop = 5; //isn't changed. Could also use a preprocessor like #define
+//Making the balls
 
-	for (int i = 0; i < numOfPop; i++) {
-	  	ball[i] = new sf::CircleShape(100.0, 100.0);
-	  	ball[i].setPosition(random(1300), random(1300));
-		}*/
+	const int numOfBalls = 5; //isn't changed. Could also use a preprocessor like #define
 
-//Making variables
-	sf::CircleShape ball1(100.0, 100.0); //f is float (also i for int or u for undef)
-	sf::CircleShape ball2(100.0, 100.0);
-	sf::CircleShape ball3(100.0, 100.0);
-
-	ball1.setPosition(random(1300), random(1300));
-	ball2.setPosition(random(1300), random(1300));
-	ball3.setPosition(random(1300), random(1300));
-
-	float x_speed_1 = 200.f;
-	float y_speed_1 = 200.f;
-	float x_speed_2 = 200.f;
-	float y_speed_2 = 200.f;
-	float x_speed_3 = 200.f;
-	float y_speed_3 = 200.f;
-
-	sf::Clock move_clock;
-
-	float x_angle_1 = 1.2;
-	float x_angle_2 = 2;
-	float x_angle_3 = -0.5;
-	float y_angle_1 = 1;
-	float y_angle_2 = 1;
-	float y_angle_3 = 1.5;
+	Ball* ball[numOfBalls]; //declaration of class Ball
+	for (int i = 0; i < numOfBalls; i++) {
+	 	ball[i] = new Ball(random(1300), random(1300));
+	}
 
 //Starting animation
 	while (window.isOpen())
@@ -66,15 +63,16 @@ int main()
 		while (window.pollEvent(evnt))
 			if (evnt.type == evnt.Closed)
 				window.close();
-		
-		float deltaTime = move_clock.restart().asSeconds();
 
-		ball1.move(x_angle_1 * x_speed_1 * deltaTime, y_angle_1 * y_speed_1 * deltaTime);
-		ball2.move(x_angle_2 * -x_speed_2 * deltaTime, y_angle_2 * -y_speed_2 * deltaTime);
-		ball3.move(x_angle_3 * -x_speed_3 * deltaTime, y_angle_3 * -y_speed_3 * deltaTime);
+
+		
+		for (int i = 0; i < numOfBalls; i++) {
+	   	ball[i]->move_around(random(1300), random(1300), 50, 50);
+	  	}
+
 
 //Bouncing on each other
-		if(ball1.getGlobalBounds().intersects(ball2.getGlobalBounds()))
+		/*if(ball1.getGlobalBounds().intersects(ball2.getGlobalBounds()))
 			{
 				x_speed_1 = -x_speed_1;
 				y_speed_1 = -y_speed_1;
@@ -125,13 +123,12 @@ int main()
 		if(ball3.getPosition().y <= 0) 
 			y_speed_3 = -y_speed_3;
 		if(ball3.getPosition().y >= 1300)
-			y_speed_3 = -y_speed_3;
+			y_speed_3 = -y_speed_3;*/
 
 
         window.clear();
-        window.draw(ball1);
-        window.draw(ball2);
-        window.draw(ball3);
+		for (int i = 0; i < numOfBalls; i++)
+	   		window.draw(ball[i]->ballObj());
         window.display();
     }
 }
